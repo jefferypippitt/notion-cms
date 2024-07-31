@@ -35,13 +35,12 @@ export function Post({
         <Image
           alt="Blog Image"
           src={bannerImage}
-          layout="fill"
-          objectFit="cover"
-          className="rounded-lg"
+          fill
+          className="object-cover"
         />
       </div>
       <div className="w-full max-w-3xl mb-4">
-        <Link href="/" className="flex items-center text-blue-500 hover:underline">
+        <Link href="/blog" className="flex items-center text-blue-500 hover:underline">
           <ArrowLeftIcon className="w-5 h-5 mr-2" />
           Back
         </Link>
