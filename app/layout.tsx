@@ -1,8 +1,10 @@
+import React from 'react';
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Header from "@/components/header";
+
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -20,7 +22,7 @@ export default function RootLayout({
       className="scroll-smooth antialiased"
       suppressHydrationWarning
     >
-      <body className={`flex min-h-screen flex-col ${GeistSans.className}`}>
+      <body className={`relative flex min-h-screen flex-col ${GeistSans.className}`}>
         <ThemeProvider
           enableSystem
           attribute="class"
@@ -28,7 +30,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
-          <main className="container grow">{children}</main>
+          <main className="container grow relative z-10">
+            {children}
+          </main>
         </ThemeProvider>
       </body>
     </html>
