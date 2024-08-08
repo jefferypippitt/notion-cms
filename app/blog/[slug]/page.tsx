@@ -8,6 +8,8 @@ import bookmarkPlugin from "@notion-render/bookmark-plugin";
 import { Post } from "@/components/post";
 import { getAuthorName } from "@/utils/blogPost";
 
+export const revalidate = 60; // Revalidate the page every 60 seconds
+
 export default async function Page({ params }: { params: { slug: string } }) {
 
   const post = await getPageBySlug(params.slug);

@@ -23,19 +23,19 @@ export default function Home() {
             <Image
               src="/logos/next-logo.jpg"
               alt="Next.js logo"
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 25vw"
+              width={500}
+              height={500}
+              className="object-cover w-full h-full"
             />
           </div>
-          <Plus className="text-4xl" />
+          <Plus className="text-4xl mt-4 md:mt-0" />
           <div className="relative w-3/4 md:w-1/4 h-48 rounded-lg overflow-hidden shadow-lg">
             <Image
               src="/logos/notion-logo.jpg"
               alt="Notion logo"
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 25vw"
+              width={500}
+              height={500}
+              className="object-cover w-full h-full"
             />
           </div>
         </div>
@@ -46,23 +46,25 @@ export default function Home() {
         </div>
         <div className="mt-10 flex justify-center items-center space-x-2">
           <p className="text-lg font-semibold">Special thanks to:</p>
-          <p className="text-blue-500 transition-colors duration-200">
+          <div className="flex space-x-2">
             <Link
               href="https://github.com/ipenywis"
               target="_blank"
               rel="noopener noreferrer"
+              className="text-blue-500 hover:text-blue-600 transition-colors duration-200"
             >
               iPenywis
             </Link>
-            ,&nbsp;
+            <span>,&nbsp;</span>
             <Link
               href="https://github.com/tuanphungcz"
               target="_blank"
               rel="noopener noreferrer"
+              className="text-blue-500 hover:text-blue-600 transition-colors duration-200"
             >
               tuanphungcz
             </Link>
-          </p>
+          </div>
         </div>
       </div>
     </section>
