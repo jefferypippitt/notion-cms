@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
+import { format, parseISO } from "date-fns";
+import { CalendarIcon, UserIcon } from "lucide-react";
 
 interface PostProps {
   title: string;
@@ -12,55 +14,79 @@ interface PostProps {
 }
 
 export function Post({ title, content, bannerImage, author, date }: PostProps) {
+  // Safely format the date, handling potential invalid dates
+  const formattedDate = date ? (() => {
+    try {
+      // First try parsing as ISO string
+      return format(parseISO(date), "MMMM d, yyyy");
+    } catch (e) {
+      try {
+        // If that fails, try direct Date constructor
+        return format(new Date(date), "MMMM d, yyyy");
+      } catch (e) {
+        // If all parsing fails, return the original string or empty
+        console.error("Failed to parse date:", date);
+        return "";
+      }
+    }
+  })() : "";
+
   return (
-    <article className="w-full mb-12 flex flex-col items-center pt-16 px-4">
+    <article className="w-full mb-8 flex flex-col pt-6">
+      {/* Back Button */}
+      <div className="mb-4 text-left">
+        <Link
+          href="/"
+          className="flex items-center text-muted-foreground hover:text-foreground transition-colors duration-200 text-sm"
+        >
+          <ArrowLeftIcon className="w-3.5 h-3.5 mr-1.5" />
+          Back to all posts
+        </Link>
+      </div>
+
       {/* Banner Image */}
-      <div className="relative w-full max-w-4xl md:h-80 h-48 mb-10 overflow-hidden rounded-lg shadow-lg">
+      <div className="relative w-full h-48 sm:h-56 md:h-64 mb-6 overflow-hidden rounded-md">
         <Image
-          alt="Blog Image"
+          alt={title}
           src={bannerImage}
-          width={400}
-          height={400}
-          className="object-cover w-full h-full transform hover:scale-105 transition-transform duration-500 ease-in-out"
+          fill
+          sizes="(max-width: 768px) 100vw, 768px"
+          priority
+          className="object-cover"
         />
       </div>
 
       {/* Title */}
-      <div className="w-full max-w-3xl text-left px-2 sm:px-4">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-6 text-gray-900 dark:text-gray-100">
-          {title}
-        </h1>
-      </div>
-      {/* Author and Date */}
-      <div className="w-full max-w-3xl mb-8 text-left px-2 sm:px-4">
-        <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">
-          By:{" "}
-          <span className="font-medium text-gray-800 dark:text-gray-200">
-            {author}
-          </span>
-        </p>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
-          Published on:{" "}
-          <span className="font-medium text-gray-800 dark:text-gray-200">
-            {date}
-          </span>
-        </p>
-      </div>
+      <h1 className="text-xl sm:text-2xl font-semibold mb-3 text-foreground leading-tight">
+        {title}
+      </h1>
 
-      {/* Back Button */}
-      <div className="w-full max-w-3xl mb-6 px-2 sm:px-4 text-left">
-        <Link
-          href="/blog"
-          className="flex items-center text-blue-500 hover:text-blue-700 transition-colors duration-200"
-        >
-          <ArrowLeftIcon className="w-5 h-5 mr-2" />
-          Back
-        </Link>
+      {/* Author and Date */}
+      <div className="flex items-center text-xs text-muted-foreground space-x-4 mb-6">
+        <div className="flex items-center">
+          <UserIcon className="h-3.5 w-3.5 mr-1" />
+          <span>{author}</span>
+        </div>
+        {formattedDate && (
+          <div className="flex items-center">
+            <CalendarIcon className="h-3.5 w-3.5 mr-1" />
+            <span>{formattedDate}</span>
+          </div>
+        )}
       </div>
 
       {/* Content */}
       <div
-        className="prose sm:prose-lg md:prose-xl dark:prose-invert max-w-3xl leading-relaxed mb-10 px-2 sm:px-4"
+        className="prose prose-sm max-w-none dark:prose-invert
+          prose-p:text-sm prose-p:leading-relaxed prose-p:my-3
+          prose-headings:font-medium prose-headings:tracking-tight
+          prose-h1:text-xl prose-h2:text-lg prose-h3:text-base
+          prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline
+          prose-img:rounded-md prose-img:my-4
+          prose-ul:my-3 prose-ol:my-3 prose-li:my-1
+          prose-code:text-xs prose-code:px-1 prose-code:py-0.5 prose-code:rounded-sm prose-code:bg-muted
+          prose-pre:bg-muted prose-pre:text-xs prose-pre:p-3 prose-pre:rounded-md
+          prose-blockquote:text-sm prose-blockquote:font-normal prose-blockquote:not-italic prose-blockquote:border-l-2 prose-blockquote:pl-4 prose-blockquote:text-muted-foreground"
         dangerouslySetInnerHTML={{ __html: content }}
       ></div>
     </article>
