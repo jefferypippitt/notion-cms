@@ -25,7 +25,6 @@ export function Post({ title, content, bannerImage, author, date }: PostProps) {
         return format(new Date(date), "MMMM d, yyyy");
       } catch (e) {
         // If all parsing fails, return the original string or empty
-        console.error("Failed to parse date:", date);
         return "";
       }
     }
@@ -86,7 +85,8 @@ export function Post({ title, content, bannerImage, author, date }: PostProps) {
           prose-ul:my-3 prose-ol:my-3 prose-li:my-1
           prose-code:text-xs prose-code:px-1 prose-code:py-0.5 prose-code:rounded-sm prose-code:bg-muted
           prose-pre:bg-muted prose-pre:text-xs prose-pre:p-3 prose-pre:rounded-md
-          prose-blockquote:text-sm prose-blockquote:font-normal prose-blockquote:not-italic prose-blockquote:border-l-2 prose-blockquote:pl-4 prose-blockquote:text-muted-foreground"
+          prose-blockquote:text-sm prose-blockquote:font-normal prose-blockquote:not-italic prose-blockquote:border-l-2 prose-blockquote:pl-4 prose-blockquote:text-muted-foreground
+          [&_.video-container]:my-6 [&_.video-container]:rounded-md [&_.video-container]:overflow-hidden [&_.video-container]:shadow-md"
         dangerouslySetInnerHTML={{ __html: content }}
       ></div>
     </article>

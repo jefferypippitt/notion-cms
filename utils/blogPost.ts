@@ -24,10 +24,8 @@ export const getBlogPosts = cache(async (): Promise<PageObjectResponse[]> => {
       ],
     });
 
-    //console.log("Fetched blog posts:", response.results);
     return response.results as PageObjectResponse[];
   } catch (error) {
-    //console.error("Error fetching blog posts:", error);
     return [];
   }
 });
